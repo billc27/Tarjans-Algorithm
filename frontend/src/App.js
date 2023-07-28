@@ -44,16 +44,35 @@ function App() {
                             placeholder="Enter text here"
                         />
 
-                        {/* Visualize Button */}
-                        <button className="text-center w-3/4 h-9 border bg-box-color border-white mt-4 rounded-sm hover:bg-gray-300 font-sans" >
-                            Visualize
-                        </button>
+                        {/* Input Mode */}
+                        <div className="mt-2">
+                            <p className="inline-block mr-4 text-white font-sans font-semibold">Input: </p>
+                            <label className="text-white font-sans font-semibold">
+                                <input type="radio" name="mode" value="file" 
+                                    className="mr-2 "
+                                />
+                                File
+                            </label>
+                            <label className="text-white font-sans font-semibold">
+                                <input type="radio" name="mode" value="text" 
+                                    className="ml-4 mr-2" 
+                                />
+                                Text
+                            </label>
+                        </div>
 
-                        {/* Find Button */}
+                        {/* Visualize Button */}
+                        <button className="w-3/4 text-center h-9 border bg-box-color border-white mt-4 rounded-sm hover:bg-gray-300 font-sans">
+                                Visualize
+                        </button>
+                        
+
+                        {/* Find SCC Button */}
                         <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans">
                             Find SCC
                         </button>
 
+                        {/* Find Bridge Button */}
                         <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans">
                             Find Bridge
                         </button>
