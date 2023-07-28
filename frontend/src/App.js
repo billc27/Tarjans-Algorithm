@@ -45,13 +45,17 @@ function App() {
                         />
 
                         {/* Visualize Button */}
-                        <button className="text-center w-3/4 h-9 border bg-box-color border-white mt-8 rounded-sm hover:bg-gray-300 font-sans" >
+                        <button className="text-center w-3/4 h-9 border bg-box-color border-white mt-4 rounded-sm hover:bg-gray-300 font-sans" >
                             Visualize
                         </button>
 
                         {/* Find Button */}
                         <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans">
-                            Find
+                            Find SCC
+                        </button>
+
+                        <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans">
+                            Find Bridge
                         </button>
                     </div>
                     
@@ -60,7 +64,8 @@ function App() {
                 {/* Right Section */}
                 <div className="w-1/2 ml-24 mt-8">
                     <p className="w-4/5 font-sans font-semibold text-center text-wht-color">Result</p>
-                    <div class="w-4/5 h-full bg-box-color border border-wht-color rounded-sm mt-3" style={{maxHeight: "90%"}}></div>
+                    <div class="w-4/5 h-full bg-box-color border border-wht-color rounded-sm mt-3" style={{maxHeight: "87%"}}></div>
+                    <p className="mt-2 font-sans text-white size-sm">Runtime: </p>
                 </div>
             </div>
         </div>
