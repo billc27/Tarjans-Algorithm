@@ -20,7 +20,7 @@ B D
 D E
 E F
 ``````
-PS: For the txt file, there MUST BE a white space after the second alphabet on each line except the last line, for example: A B{white space} and B C{white space}
+PS: For the txt file, there MUST BE a white space after the second alphabet on each line except for the last line, for example: A B{white space} and B C{white space}
 
 ## How To Run
 In your terminal, move to the frontend directory and run the frontend project using the commands:
