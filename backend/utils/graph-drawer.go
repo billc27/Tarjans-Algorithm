@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 	graphdraw "github.com/dominikbraun/graph/draw"
 )
 
-func drawInputGraph(edges [][2]string) {
+func DrawInputGraph(edges [][2]string) {
 	g := graph.New(graph.StringHash, graph.Directed())
 
 	for _, edge := range edges {
@@ -33,7 +33,7 @@ func drawInputGraph(edges [][2]string) {
 	}
 }
 
-func drawSCCGraph(scc [][]string) {
+func DrawSCCGraph(scc [][]string) {
 	g := graph.New(graph.StringHash, graph.Directed())
 
 	for _, component := range scc {
@@ -98,7 +98,7 @@ func combineImages(imagePaths []string) (*image.RGBA, error) {
 	return result, nil
 }
 
-func drawBridgeGraph(bridges [][2]string) {
+func DrawBridgeGraph(bridges [][2]string) {
 	imagePaths := []string{}
 
 	for i, bridge := range bridges {
@@ -140,29 +140,29 @@ func drawBridgeGraph(bridges [][2]string) {
 }
 
 // func main() {
-// 	inputGraph := [][2]string{
-// 		{"A", "B"},
-// 		{"B", "C"},
-// 		{"C", "A"},
-// 		{"B", "D"},
-// 		{"D", "E"},
-// 		{"E", "F"},
-// 		{"F", "E"},
-// 	}
+	// inputGraph := [][2]string{
+	// 	{"A", "B"},
+	// 	{"B", "C"},
+	// 	{"C", "A"},
+	// 	{"B", "D"},
+	// 	{"D", "E"},
+	// 	{"E", "F"},
+	// 	{"F", "E"},
+	// }
 
-// 	scc := [][]string{
-// 		{"F", "E"},
-// 		{"D"},
-// 		{"C", "B", "A"},
-// 	}
+	// scc := [][]string{
+	// 	{"F", "E"},
+	// 	{"D"},
+	// 	{"C", "B", "A"},
+	// }
 
-// 	bridge := [][2]string{
-// 		{"E", "F"},
-// 		{"D", "E"},
-// 		{"B", "D"},
-// 	}
+	// bridge := [][2]string{
+	// 	{"E", "F"},
+	// 	{"D", "E"},
+	// 	{"B", "D"},
+	// }
 
-// 	drawInputGraph(inputGraph)
-// 	drawSCCGraph(scc)
-// 	drawBridgeGraph(bridge)
+// 	DrawInputGraph(inputGraph)
+// 	DrawSCCGraph(scc)
+// 	DrawBridgeGraph(bridge)
 // }

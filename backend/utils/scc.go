@@ -1,13 +1,13 @@
-package main
+package utils
 
 import (
-	"bufio"
-	"fmt"
-	"os"
+	// "bufio"
+	// "fmt"
+	// "os"
 	"strings"
 )
 
-type Graph struct {
+type GraphSCC struct {
 	vertices   []string
 	edges      map[string][]string
 	index      map[string]int
@@ -18,8 +18,8 @@ type Graph struct {
 	scc        [][]string
 }
 
-func NewGraph() *Graph {
-	return &Graph{
+func NewGraph() *GraphSCC {
+	return &GraphSCC{
 		vertices:   []string{},
 		edges:      make(map[string][]string),
 		index:      make(map[string]int),
@@ -31,7 +31,7 @@ func NewGraph() *Graph {
 	}
 }
 
-func (g *Graph) AddEdge(u, v string) {
+func (g *GraphSCC) AddEdge(u, v string) {
 	if _, ok := g.edges[u]; !ok {
 		g.edges[u] = []string{}
 		g.vertices = append(g.vertices, u)
@@ -39,7 +39,7 @@ func (g *Graph) AddEdge(u, v string) {
 	g.edges[u] = append(g.edges[u], v)
 }
 
-func (g *Graph) StrongConnect(v string) {
+func (g *GraphSCC) StrongConnect(v string) {
 	g.index[v] = g.indexCount
 	g.lowlink[v] = g.indexCount
 	g.indexCount++
@@ -71,7 +71,7 @@ func (g *Graph) StrongConnect(v string) {
 	}
 }
 
-func (g *Graph) findSCC() [][]string {
+func (g *GraphSCC) findSCC() [][]string {
 	for _, v := range g.vertices {
 		if _, ok := g.index[v]; !ok {
 			g.StrongConnect(v)
@@ -96,3 +96,22 @@ func (g *Graph) findSCC() [][]string {
 //         fmt.Println(strings.Join(component, " "))
 //     }
 // }
+
+func GenerateSCC(input string) string {
+	graph := NewGraph()
+	lines := strings.Split(input, "\n")
+	for _, line := range lines {
+		if line == "" {
+			break
+		}
+		parts := strings.Split(line, " ")
+		graph.AddEdge(parts[0], parts[1])
+	}
+	scc := graph.findSCC()
+	var result []string
+	for _, component := range scc {
+		result = append(result, strings.Join(component, " "))
+	}
+	return strings.Join(result, "\n")
+}
+

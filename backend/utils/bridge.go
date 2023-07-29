@@ -1,9 +1,9 @@
-package main
+package utils
 
 import (
-	"bufio"
-	"fmt"
-	"os"
+	// "bufio"
+	// "fmt"
+	// "os"
 	"strings"
 )
 
@@ -14,6 +14,7 @@ type Graph struct {
 	low      map[string]int
 	disc     map[string]int
 	parent   map[string]string
+	bridges  [][]string
 }
 
 func NewUndirectedGraph() *Graph {
@@ -24,6 +25,7 @@ func NewUndirectedGraph() *Graph {
 		low:      make(map[string]int),
 		disc:     make(map[string]int),
 		parent:   make(map[string]string),
+		bridges:  [][]string{},
 	}
 }
 
@@ -51,7 +53,7 @@ func (g *Graph) BridgeUtil(u string) {
 			g.BridgeUtil(v)
 
 			if g.low[v] > g.disc[u] {
-				fmt.Println(u, v)
+				g.bridges = append(g.bridges, []string{u, v})
 			}
 
 			if g.low[v] < g.low[u] {
@@ -63,24 +65,46 @@ func (g *Graph) BridgeUtil(u string) {
 	}
 }
 
-func (g *Graph) findBridge() {
+func (g *Graph) findBridge() [][]string {
 	for _, v := range g.vertices {
 		if _, ok := g.disc[v]; !ok {
 			g.BridgeUtil(v)
 		}
 	}
+	return g.bridges
 }
 
 // func main() {
-// 	scanner := bufio.NewScanner(os.Stdin)
-// 	graph := NewUndirectedGraph()
-// 	for scanner.Scan() {
-//         line := scanner.Text()
-//         if line == ""{
-//             break
-//         }
-//         parts := strings.Split(line, " ")
-//         graph.AddEdge(parts[0], parts[1])
-//     }
-// 	graph.findBridge()
+	// scanner := bufio.NewScanner(os.Stdin)
+	// graph := NewUndirectedGraph()
+	// for scanner.Scan() {
+    //     line := scanner.Text()
+    //     if line == ""{
+    //         break
+    //     }
+    //     parts := strings.Split(line, " ")
+    //     graph.AddEdge(parts[0], parts[1])
+    // }
+	// bridges := graph.findBridge()
+	// for _, bridge := range bridges {
+	// 	fmt.Println(strings.Join(bridge, " "))
+	// }
 // }
+
+func GenerateBridges(input string) string {
+	graph := NewUndirectedGraph()
+	lines := strings.Split(input, "\n")
+	for _, line := range lines {
+		if line == "" {
+			break
+		}
+		parts := strings.Split(line, " ")
+		graph.AddEdge(parts[0], parts[1])
+	}
+	bridges := graph.findBridge()
+	var result []string
+	for _, bridge := range bridges {
+		result = append(result, strings.Join(bridge, " "))
+	}
+	return strings.Join(result, "\n")
+}
