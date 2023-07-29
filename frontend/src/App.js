@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-
-
 function App() {
+    const [result, setResult] = useState("");
+    const [runtime, setRuntime] = useState("");
     const [filePath, setFilePath] = useState('');
 
     const handleFileChange = (event) => {
@@ -10,6 +10,122 @@ function App() {
           setFilePath(event.target.files[0].name);
         }
     };
+
+    function getContent() {
+        // Check which input mode is selected
+        const inputMode = document.querySelector('input[name="mode"]:checked').value;
+    
+        if (inputMode === "text") {
+            // Get content from text area
+            const content = document.querySelector("textarea").value;
+            
+            // console.log(content);
+            return Promise.resolve(content);
+        } else {
+            // Get content from file input
+            const file = document.querySelector('input[type="file"]').files[0];
+            return new Promise(resolve => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    // console.log(reader.result);
+                    resolve(reader.result);
+                }
+                reader.readAsText(file);
+            });
+        }
+    }
+    
+    function handleVisualizeClick() {
+        // Record start time
+        const startTime = performance.now();
+
+        getContent().then(content => {
+            // Make HTTP request to backend
+            fetch("http://localhost:8080/visualize", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content: content })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                // Create object URL from blob
+                const imageUrl = URL.createObjectURL(blob);
+
+                setResult(<img className="mx-auto block max-w-full max-h-full" src={imageUrl} alt="input"/>)
+
+                // Record end time
+                const endTime = performance.now();
+
+                // Runtime
+                const runtime = endTime - startTime;
+
+                setRuntime(runtime);
+            });
+        });
+    }
+    
+    function handleFindSccClick() {
+        // Record start time
+        const startTime = performance.now();
+
+        getContent().then(content => {
+            // Make HTTP request to backend
+            fetch("http://localhost:8080/scc", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content: content })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                // Create object URL from blob
+                const imageUrl = URL.createObjectURL(blob);
+                setResult(<img className="mx-auto block max-w-full max-h-full" src={imageUrl} alt="scc"/>)
+
+                // Record end time
+                const endTime = performance.now();
+
+                // Runtime
+                const runtime = endTime - startTime;
+
+                setRuntime(runtime);
+            });
+        });
+    }
+    
+    function handleFindBridgeClick() {
+        // Record start time
+        const startTime = performance.now();
+
+        getContent().then(content => {
+            // Make HTTP request to backend
+            fetch("http://localhost:8080/bridge", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ content: content })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                // Create object URL from blob
+                const imageUrl = URL.createObjectURL(blob);
+                setResult(<img className="mx-auto block max-w-full max-h-full" src={imageUrl} alt="bridge" />)
+
+                // Record end time
+                const endTime = performance.now();
+
+                // Runtime
+                const runtime = endTime - startTime;
+
+                setRuntime(runtime);
+            });
+        });
+    }
+    
 
     return (
         <div className="App">
@@ -62,18 +178,20 @@ function App() {
                         </div>
 
                         {/* Visualize Button */}
-                        <button className="w-3/4 text-center h-9 border bg-box-color border-white mt-4 rounded-sm hover:bg-gray-300 font-sans">
+                        <button className="w-3/4 text-center h-9 border bg-box-color border-white mt-4 rounded-sm hover:bg-gray-300 font-sans"
+                        onClick={handleVisualizeClick}>
                                 Visualize
                         </button>
-                        
 
                         {/* Find SCC Button */}
-                        <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans">
+                        <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans"
+                        onClick={handleFindSccClick}>
                             Find SCC
                         </button>
 
                         {/* Find Bridge Button */}
-                        <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans">
+                        <button className="text-center w-3/4 h-9 border bg-title-color border-white mt-2 rounded-sm hover:bg-gray-300 font-sans"
+                        onClick={handleFindBridgeClick}>
                             Find Bridge
                         </button>
                     </div>
@@ -83,8 +201,13 @@ function App() {
                 {/* Right Section */}
                 <div className="w-1/2 ml-24 mt-8">
                     <p className="w-4/5 font-sans font-semibold text-center text-wht-color">Result</p>
-                    <div class="w-4/5 h-full bg-box-color border border-wht-color rounded-sm mt-3" style={{maxHeight: "87%"}}></div>
-                    <p className="mt-2 font-sans text-white size-sm">Runtime: </p>
+                    
+                    {/* Result Box */}
+                    <div className="w-4/5 h-full bg-box-color border border-wht-color rounded-sm mt-3" style={{maxHeight: "87%"}}>
+                        {result}
+                    </div>
+
+                    <p className="mt-2 font-sans text-wht-color font-semibold">Runtime: {runtime} ms</p>
                 </div>
             </div>
         </div>
