@@ -3,6 +3,7 @@
 
 ## Table of Contents
 * [General Info](#general-information)
+* [WebApp View](#webapp-view)
 * [Additional Info](#additional-info)
 * [How To Run](#how-to-run)
 * [Tech Stack](#tech-stack)
@@ -21,6 +22,16 @@ D E
 E F
 ``````
 PS: For the txt file, there MUST BE a white space after the second alphabet on each line except for the last line, for example: A B{white space} and B C{white space}
+
+## WebApp View
+Graph Visualization
+> ![Main View](./frontend/screenshot/screenshot_visualize.png)
+
+SCC Visualization
+> ![Main View](./frontend/screenshot/screenshot_scc.png)
+
+Bridges Visualization
+> ![Main View](./frontend/screenshot/screenshot_bridge.png)
 
 ## How To Run
 In your terminal, move to the frontend directory and run the frontend project using the commands:
